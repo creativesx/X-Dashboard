@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHFTX Master Dashboard · Product Intelligence Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ═══════════ TOP NAV ═══════════ -->
+<nav class="topnav">
+  <div class="brand" onclick="showPage('dashboard')" style="cursor: pointer;">
+    <div class="brand-dot"></div>
+    <div>
+      <div style="font-family: var(--font-display); font-size: 16px; font-weight: 700; color: white; letter-spacing: 0.02em;">SHFTX</div>
+      <div class="brand-tag">Product Intelligence · v1.0</div>
+    </div>
+  </div>
+
+  <div class="topnav-right">
+    <div class="nav-stat" id="nav-stat-skus"><strong>—</strong> SKUs</div>
+    <div class="nav-stat" id="nav-stat-rev"><strong>—</strong> 6mo Rev</div>
+    <div class="nav-stat" id="nav-stat-units"><strong>—</strong> units</div>
+    <input class="nav-search" id="nav-search-input" placeholder="Search SKU, name, brand…  (⌘K)" autocomplete="off">
+    <button class="nav-upload-btn" onclick="showPage('upload')">↑ Upload Data</button>
+  </div>
+</nav>
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<aside class="sidebar">
+  <div class="sidebar-section">Main</div>
+  <div class="sidebar-item" data-page="dashboard" onclick="showPage('dashboard')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></span>
+    Dashboard
+  </div>
+  <div class="sidebar-item" data-page="catalogue" onclick="showPage('catalogue')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="2" rx="0.5"/><rect x="2" y="7" width="12" height="2" rx="0.5"/><rect x="2" y="11" width="12" height="2" rx="0.5"/></svg></span>
+    Catalogue
+    <span class="sidebar-count" id="sidebar-count-catalogue">—</span>
+  </div>
+  <div class="sidebar-item" data-page="mapping" onclick="showPage('mapping')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><circle cx="4" cy="4" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="4" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/></svg></span>
+    Brand × Platform
+    <span class="sidebar-count" id="sidebar-count-mapping">—</span>
+  </div>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section">Distribution</div>
+  <div class="sidebar-item" data-page="platforms" onclick="showPage('platforms')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><line x1="2" y1="8" x2="14" y2="8"/><path d="M8 2 C 5 5, 5 11, 8 14 M8 2 C 11 5, 11 11, 8 14" fill="none"/></svg></span>
+    Platform Overview
+    <span class="sidebar-count" id="sidebar-count-platforms">—</span>
+  </div>
+  <div class="sidebar-item" onclick="showPage('platform-detail', 'amazon-in')" style="padding-left: 28px;">
+    <span style="width: 6px; height: 6px; border-radius: 50%; background: #FF9900; margin-right: 6px;"></span>
+    Amazon India
+  </div>
+  <div class="sidebar-item" onclick="showPage('platform-detail', 'amazon-com')" style="padding-left: 28px;">
+    <span style="width: 6px; height: 6px; border-radius: 50%; background: #1B1464; margin-right: 6px;"></span>
+    Amazon Global
+  </div>
+  <div class="sidebar-item" onclick="showPage('platform-detail', 'flipkart')" style="padding-left: 28px;">
+    <span style="width: 6px; height: 6px; border-radius: 50%; background: #2874F0; margin-right: 6px;"></span>
+    Flipkart
+  </div>
+  <div class="sidebar-item" onclick="showPage('platform-detail', 'blinkit')" style="padding-left: 28px;">
+    <span style="width: 6px; height: 6px; border-radius: 50%; background: #F8C400; margin-right: 6px;"></span>
+    Blinkit
+  </div>
+  <div class="sidebar-item" onclick="showPage('platform-detail', 'zepto')" style="padding-left: 28px;">
+    <span style="width: 6px; height: 6px; border-radius: 50%; background: #7C3AED; margin-right: 6px;"></span>
+    Zepto
+  </div>
+  <div class="sidebar-item" onclick="showPage('platform-detail', 'instamart')" style="padding-left: 28px;">
+    <span style="width: 6px; height: 6px; border-radius: 50%; background: #FC8019; margin-right: 6px;"></span>
+    Instamart
+  </div>
+
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section">Operations</div>
+  <div class="sidebar-item" data-page="inventory" onclick="showPage('inventory')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><path d="M2 4 L8 1 L14 4 L14 12 L8 15 L2 12 Z"/><line x1="2" y1="4" x2="8" y2="7"/><line x1="14" y1="4" x2="8" y2="7"/><line x1="8" y1="7" x2="8" y2="15"/></svg></span>
+    Inventory & Allocation
+    <span class="sidebar-count" id="sidebar-count-inventory">—</span>
+  </div>
+  <div class="sidebar-item" data-page="sales" onclick="showPage('sales')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><polyline points="2,12 6,8 9,11 14,4" fill="none"/><circle cx="2" cy="12" r="1"/><circle cx="6" cy="8" r="1"/><circle cx="9" cy="11" r="1"/><circle cx="14" cy="4" r="1"/></svg></span>
+    Sales Analytics
+  </div>
+  <div class="sidebar-item" data-page="upload" onclick="showPage('upload')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><path d="M8 11 L8 2 M5 5 L8 2 L11 5" fill="none"/><rect x="2" y="11" width="12" height="3" rx="0.5"/></svg></span>
+    Upload Data
+  </div>
+  <div class="sidebar-item" data-page="add-product" onclick="showPage('add-product')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><line x1="8" y1="5" x2="8" y2="11"/><line x1="5" y1="8" x2="11" y2="8"/></svg></span>
+    Add Product
+  </div>
+  <div class="sidebar-item" data-page="variations" onclick="showPage('variations')">
+    <span class="sidebar-icon"><svg viewBox="0 0 16 16"><circle cx="4" cy="4" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="8" cy="12" r="2"/><line x1="4" y1="4" x2="8" y2="12"/><line x1="12" y1="4" x2="8" y2="12"/></svg></span>
+    Variation Manager
+    <span class="sidebar-count" id="sidebar-count-variations">—</span>
+  </div>
+</aside>
+
+<!-- ═══════════ MAIN CONTENT ═══════════ -->
+<main class="main">
+  <div id="page-dashboard" class="page"></div>
+  <div id="page-catalogue" class="page"></div>
+  <div id="page-mapping" class="page"></div>
+  <div id="page-platforms" class="page"></div>
+  <div id="page-platform-detail" class="page"></div>
+  <div id="page-inventory" class="page"></div>
+  <div id="page-sales" class="page"></div>
+  <div id="page-upload" class="page"></div>
+  <div id="page-add-product" class="page"></div>
+  <div id="page-variations" class="page"></div>
+  <div id="page-not-found" class="page">
+    <div class="empty-state">
+      <div style="font-family: var(--font-display); font-size: 22px; margin-bottom: 8px;">Page not found</div>
+      <button class="btn accent" onclick="showPage('dashboard')">← Back to Dashboard</button>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════ DRAWER ═══════════ -->
+<div id="drawer-overlay" class="drawer-overlay"></div>
+<aside id="drawer" class="drawer">
+  <button class="drawer-close" onclick="closeDrawer()" aria-label="Close">×</button>
+  <div id="drawer-body-content"></div>
+</aside>
+
+<!-- ═══════════ TOAST ═══════════ -->
+<div id="toast" class="toast"></div>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/router.js"></script>
+<script src="js/page-dashboard.js"></script>
+<script src="js/page-catalogue.js"></script>
+<script src="js/page-mapping.js"></script>
+<script src="js/page-platforms.js"></script>
+<script src="js/page-inventory.js"></script>
+<script src="js/page-sales.js"></script>
+<script src="js/page-upload.js"></script>
+<script src="js/page-add-product.js"></script>
+<script src="js/page-variations.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
